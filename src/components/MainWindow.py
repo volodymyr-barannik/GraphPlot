@@ -23,4 +23,4 @@ class mainWindow(QMainWindow):
         self.gui.buttonQuit.clicked.connect(self.root_functions.quit)
         # self.gui.boxWindowPlotParameterA.editingFinished.connect(self.gui.drawWindowPlot(a=self.gui.boxWindowPlotParameterA.value(),
         # b=0.01, parent=self))
-        self.gui.boxPlotParameterA.valueChanged.connect(self.root_functions.drawWindowPlot)
+        self.gui.buttonPlot.clicked.connect(self.root_functions.drawWindowPlot)
