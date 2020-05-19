@@ -7,8 +7,9 @@ from matplotlib.figure import Figure
 from mpl_toolkits.axes_grid1 import Divider, Size
 from mpl_toolkits.axes_grid1.mpl_axes import Axes
 import PyQt5
-from src.Constants import PLOT_PRECISION, PLOT_SCALING_LIMITS_FACTOR
+from src.Constants import PLOT_PRECISION, PLOT_SCALING_LIMITS_FACTOR, INITIAL_XY_LIMITS, PLOT_SCALING_LIMITS_UNIT_FACTOR
 from decimal import *
+
 
 class windowPlot(FigureCanvas):
     def __init__(self, parent=None):
@@ -26,7 +27,7 @@ class windowPlot(FigureCanvas):
         self.ax.spines['right'].set_color('none')
 
         # Setting up boundaries
-        xy_lim = 5
+        xy_lim = INITIAL_XY_LIMITS
         self.ax.set_xlim([-xy_lim, xy_lim])
         self.ax.set_ylim([-xy_lim, xy_lim])
 
@@ -39,24 +40,25 @@ class windowPlot(FigureCanvas):
         r = a * np.e ** (b * theta)
 
         # and converting them into cartesian coordinates
-        x = r * np.cos(theta)
-        y = r * np.sin(theta)
+        x = r * (np.cos(theta))
+        y = r * (np.sin(theta))
 
+        print(max(x, key=abs))
         # Calculating spiral graph boundaries
-        if x[-1] >= 1:
-            xy_lim = x[-1] * PLOT_SCALING_LIMITS_FACTOR + 1
-        elif 0 < x[-1] < 1:
-            xy_lim = x[-1] * PLOT_SCALING_LIMITS_FACTOR * 1.25
-        elif x[-1] == 0:
+        if max(x, key=abs) >= 1:
+            xy_lim = max(x, key=abs) * PLOT_SCALING_LIMITS_FACTOR + 1
+        elif 0 < max(x, key=abs) < 1:
+            xy_lim = max(x, key=abs) * PLOT_SCALING_LIMITS_FACTOR * PLOT_SCALING_LIMITS_UNIT_FACTOR
+        elif max(x, key=abs) == 0:
             xy_lim = 2
-        elif 0 > x[-1] > -1:
-            xy_lim = -x[-1] * PLOT_SCALING_LIMITS_FACTOR * 1.25
+        elif 0 > max(x, key=abs) > -1:
+            xy_lim = -max(x, key=abs) * PLOT_SCALING_LIMITS_FACTOR * PLOT_SCALING_LIMITS_UNIT_FACTOR
         else:
-            xy_lim = -x[-1] * PLOT_SCALING_LIMITS_FACTOR + 1
+            xy_lim = -max(x, key=abs) * PLOT_SCALING_LIMITS_FACTOR + 1
 
         # Setting up spiral graph boundaries
-        self.ax.set_xlim([-xy_lim, xy_lim])
-        self.ax.set_ylim([-xy_lim, xy_lim])
+        self.ax.set_xbound([-xy_lim, xy_lim])
+        self.ax.set_ybound([-xy_lim, xy_lim])
 
         # Plotting spiral graph
         self.ax.plot(x, y, color='b', label="Логарифмічна спіраль")

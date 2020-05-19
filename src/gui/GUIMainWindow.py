@@ -29,7 +29,8 @@ class UI_MainWindow(object):
         self.boxPlotArgA.move(int(1 * WINDOW_WIDTH / 4 - self.boxPlotArgA.width() / 2),
                               int(34.75 * WINDOW_HEIGHT / 38 - self.boxPlotArgA.height() / 2))
         self.boxPlotArgA.setText("1,0")
-        self.boxPlotArgA.setToolTip('Defines size of spiral')
+        self.boxPlotArgA.setToolTip('Можливі значення: (-inf, +inf)\n'
+                                    'Визначає розмір спіралі')
 
         self.labelPlotArgA = QLabel("a:", main_window)
         self.labelPlotArgA.resize(self.labelPlotArgA.sizeHint())
@@ -42,7 +43,7 @@ class UI_MainWindow(object):
         self.boxPlotArgB.move(int(2 * WINDOW_WIDTH / 4 - self.boxPlotArgB.width() / 2),
                               int(34.75 * WINDOW_HEIGHT / 38 - self.boxPlotArgB.height() / 2))
         self.boxPlotArgB.setText("0,1")
-        self.boxPlotArgB.setToolTip('Можливі значення: [0,00001, +inf)\n'
+        self.boxPlotArgB.setToolTip('Можливі значення: (-inf, +inf)\n'
                                     'Визначає наскільки сильно спіраль буде закручена')
 
         self.labelPlotArgB = QLabel("b:", main_window)
