@@ -1,14 +1,7 @@
-from PyQt5.QtCore import QCoreApplication
-from PyQt5.QtWidgets import QMainWindow, QVBoxLayout
-from matplotlib.backends.backend_template import FigureCanvas
+from PyQt5.QtWidgets import QMainWindow
 
 from src.functionality.MainWindowFunctions import mainWindowFunctions
 from src.gui.GUIMainWindow import UI_MainWindow
-from src.functionality import MainWindowFunctions
-import src.components.PlotWindow
-import numpy as np
-import matplotlib.pyplot as plt
-from src.components.PlotWindow import windowPlot
 
 
 class mainWindow(QMainWindow):
@@ -22,3 +15,4 @@ class mainWindow(QMainWindow):
         # gui bindings
         self.gui.buttonQuit.clicked.connect(self.main_window_functions.quit)
         self.gui.buttonPlot.clicked.connect(self.main_window_functions.plot_spiral)
+        self.gui.buttonSave.clicked.connect(self.main_window_functions.file_save)
