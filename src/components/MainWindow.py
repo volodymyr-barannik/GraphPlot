@@ -15,4 +15,7 @@ class mainWindow(QMainWindow):
         # gui bindings
         self.gui.buttonQuit.clicked.connect(self.main_window_functions.quit)
         self.gui.buttonPlot.clicked.connect(self.main_window_functions.plot_spiral)
-        self.gui.buttonSave.clicked.connect(self.main_window_functions.file_save)
+        self.gui.buttonSave.clicked.connect(self.main_window_functions.save_file)
+
+        #shortcuts
+        self.gui.shortcutSave.activated.connect(self.main_window_functions.save_file)
