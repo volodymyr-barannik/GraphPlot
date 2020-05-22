@@ -9,21 +9,71 @@
 
 from PyQt5 import QtCore, QtWidgets, Qt
 from PyQt5.QtCore import QRegExp
-from PyQt5.QtGui import QDoubleValidator, QFont, QRegExpValidator, QKeySequence
-from PyQt5.QtWidgets import QStatusBar, QShortcut
+from PyQt5.QtGui import QDoubleValidator, QFont, QRegExpValidator, QKeySequence, QIcon
+from PyQt5.QtWidgets import QStatusBar, QShortcut, QMenuBar
 
 from src.Constants import PLOT_BUTTON_BACKGROUND_COLOR, IMPORTANT_BUTTON_BACKGROUND_COLOR, MAIN_WINDOW_BACKGROUND_COLOR, \
     LINE_COLOR, LINE_TEXT_COLOR, LINE_PADDING, STATUSBAR_BACKGROUND_COLOR, STATUSBAR_BORDER_COLOR, STATUSBAR_TEXT_COLOR, \
-    BUTTON_TEXT_COLOR, PLOT_BUTTON_TEXT_COLOR, LABEL_TEXT_COLOR
+    BUTTON_TEXT_COLOR, PLOT_BUTTON_TEXT_COLOR, LABEL_TEXT_COLOR, MAIN_WINDOW_TEXT_COLOR, QMENU_BACKGROUND_COLOR, \
+    QMENU_SELECTED_ITEM_BACKGROUND_COLOR, QMENU_ENABLED_TEXT_COLOR, QMENUBAR_ITEM_BACKGROUND_COLOR, \
+    QMENUBAR_ITEM_PRESSED_BACKGROUND_COLOR, QMENUBAR_BACKGROUND_COLOR, QMENUBAR_ITEM_TEXT_COLOR
 from src.components.PlotWindow import windowPlot
 
 
 class UI_MainWindow(object):
     def init_ui(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
+       # MainWindow.title()
         MainWindow.resize(528, 638)
-        MainWindow.setStyleSheet("background-color: {background_color};"
-                                 .format(background_color = MAIN_WINDOW_BACKGROUND_COLOR))
+        MainWindow.setWindowIcon(QIcon('res/icon.png'))
+        MainWindow.setStyleSheet(""" 
+                                #centralwidget {{
+                                    background-color: {main_window_background_color};
+                                }}     
+                                                        
+                                QMenuBar {{
+                                    background-color: {qmenubar_background_color};
+                                }}
+                                
+                                QMenuBar::item {{
+                                    spacing: 3px;           
+                                    padding: 2px 10px;
+                                    background-color: {qmenubar_item_background_color};
+                                    color: {qmenubar_item_text_color};  
+                                    border-radius: 3px;
+                                }}
+
+                                QMenuBar::item:pressed {{
+                                    background-color: {qmenubar_item_pressed_background_color};
+                                }}  
+                                
+                                QMenu {{
+                                    background-color: {qmenu_background_color};   
+                                }}
+                                
+                                QMenu::item {{
+                                    background-color: {qmenu_background_color};
+                                }}
+                                
+                                QMenu::item:enabled {{
+                                    background-color: {qmenu_background_color};
+                                    color: {qmenu_enabled_text_color};
+                                }}
+                                
+                                QMenu::item:selected {{
+                                    background-color: {qmenu_selected_item_background_color};
+                                    color: rgb(250,250,250);
+                                }}
+                                """
+                                 .format(main_window_background_color = MAIN_WINDOW_BACKGROUND_COLOR,
+                                         qmenubar_background_color = QMENUBAR_BACKGROUND_COLOR,
+                                         qmenubar_item_text_color = QMENUBAR_ITEM_TEXT_COLOR,
+                                         qmenu_background_color = QMENU_BACKGROUND_COLOR,
+                                         qmenu_selected_item_background_color = QMENU_SELECTED_ITEM_BACKGROUND_COLOR,
+                                         qmenu_enabled_text_color = QMENU_ENABLED_TEXT_COLOR,
+                                         qmenubar_item_background_color = QMENUBAR_ITEM_BACKGROUND_COLOR,
+                                         qmenubar_item_pressed_background_color = QMENUBAR_ITEM_PRESSED_BACKGROUND_COLOR
+                                         ))
 
         self.colibri_font_AA_bold = QFont("Calibri Bold", 8)
         self.colibri_font_AA_bold.setStyleStrategy(QFont.PreferAntialias)
@@ -118,7 +168,7 @@ class UI_MainWindow(object):
 
         self.buttonPlot = QtWidgets.QPushButton(self.centralwidget)
         self.buttonPlot.setObjectName("buttonPlot")
-        self.buttonPlot.setToolTip('Будує графік')
+        self.buttonPlot.setToolTip('Будує графік логарифмічної спіралі')
         self.buttonPlot.setStyleSheet("""QPushButton {{background-color: {background_color};
                                          border-style: none;
                                          border-width: 2px;
@@ -150,12 +200,13 @@ class UI_MainWindow(object):
         self.lineRange = QtWidgets.QLineEdit(self.centralwidget)
         self.lineRange.setObjectName("lineRange")
         self.lineRange.setText("[0; 4pi]")
-        self.lineRange.setValidator(QRegExpValidator(QRegExp("^(\[|\()\s?"
-                                                             "((-?\d{0,16},\d{0,16})|(-?\d{0,16}))"
-                                                             "((p?)|(pi));"
-                                                             "\s?((-?\d{0,16},\d{0,16})|(-?\d{0,16}))"
-                                                             "((p?)|(pi))\s?"
-                                                             "(\]|\))$")))
+        self.range_regexp = QRegExp("^(\[|\()\s?"
+                               "((-?\d{0,16},\d{0,16})|(-?\d{0,16}))"
+                               "((p?)|(pi));"
+                               "\s?((-?\d{0,16},\d{0,16})|(-?\d{0,16}))"
+                               "((p?)|(pi))\s?"
+                               "(\]|\))$")
+        self.lineRange.setValidator(QRegExpValidator(self.range_regexp))
         self.lineRange.setStyleSheet("""QLineEdit {{background-color: {background_color};
                                             border-style: none;
                                             border-width: 2px;
@@ -193,7 +244,7 @@ class UI_MainWindow(object):
                                              subcontrol-position: top right;
                                         
                                              width: 16px;
-                                             border-image: url('../res/spinup.png');
+                                             border-image: url('res/spinup.png');
                                              border-width: 1px;
                                          }}
                                         
@@ -202,7 +253,7 @@ class UI_MainWindow(object):
                                              subcontrol-position: bottom right;
                                         
                                              width: 16px;
-                                             border-image: url('../res/spindown.png');
+                                             border-image: url('res/spindown.png');
                                              border-width: 1px;
                                              border-top-width: 0;
                                          }}"""
@@ -270,6 +321,10 @@ class UI_MainWindow(object):
                                              text_color=STATUSBAR_TEXT_COLOR))
         self.verticalLayout.addWidget(self.statusBar)
 
+        self.menuBar = MainWindow.menuBar()
+        self.menuBar.setFont(self.colibri_font_AA_regular)
+        self.viewMenu = self.menuBar.addMenu('&View')
+
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -277,7 +332,7 @@ class UI_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Log Spiral Plotting Tool"))
         self.labelA.setText(_translate("MainWindow", "a ="))
         self.labelB.setText(_translate("MainWindow", "b ="))
         self.buttonPlot.setText(_translate("MainWindow", "Побудувати"))
