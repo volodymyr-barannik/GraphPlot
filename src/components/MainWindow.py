@@ -17,7 +17,7 @@ class mainWindow(QMainWindow):
 
         if self.first_run:
             self.main_window_functions.show_statusbar_message(
-                "Ця програма будує графік логарифмічної спіралі: r = a*e^(b*phi).", time=20)
+                "Ця програма будує графік логарифмічної спіралі: r = a*e^(b*phi).", time=15)
             self.first_run = False
 
         # gui bindings
