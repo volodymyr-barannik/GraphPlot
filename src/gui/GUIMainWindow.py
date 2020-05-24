@@ -271,7 +271,7 @@ class UI_MainWindow(object):
 
         self.buttonSave = QtWidgets.QPushButton(self.centralwidget)
         self.buttonSave.setObjectName("buttonSave")
-        self.shortcutSave = QShortcut(QKeySequence('Ctrl+S'), MainWindow)
+        self.shortcutSave = QShortcut(QKeySequence("Ctrl+S"), MainWindow)
         self.buttonSave.setStyleSheet("""QPushButton {{background-color: {background_color};
                                       border-style: none;
                                       border-width: 2px;

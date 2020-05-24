@@ -1,2 +1,1 @@
-#Spiralus
-This is a simple logarithmic spiral plotting software
+This is a simple logarithmic spiral plotting tool

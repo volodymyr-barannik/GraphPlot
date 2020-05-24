@@ -34,7 +34,7 @@ class mainWindowFunctions(object):
             self.show_statusbar_message("Помилка вводу.", STATUSBAR_ERROR_TEXT_COLOR)
             return
 
-        if arg_a > 100000000:
+        if arg_a > 27495533:
             self.show_tooltip_message("Значення \"a\" занадто велике", self.mainWindow.gui.lineA)
             self.show_statusbar_message("Помилка вводу.", STATUSBAR_ERROR_TEXT_COLOR)
             return
